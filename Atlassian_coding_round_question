@@ -1,0 +1,46 @@
+Problem
+Supoose a secret array A of N integers. You have to output the number of arrays which are similar to array A.
+
+An array B is said to be similar to array A if -
+
+1. The length of the array B is same as that of A i.e. equal to N.
+
+2. Each element of the array B lies between [ lowerBound, upperBound ].
+
+3. Difference between each pair of consecutive elements of array B should be equal to the difference between respective pair of consecutive elements in array A. So, (B[i-1]-B[i]) should be equal to (A[i-1]-A[i]) for all i from 1 to N-1.
+
+You are given value of lowerBound and upperBound. You don't know the array A but you know an array C of N-1 elements which contain differences between each pair of consecutive integers of the array A. Output the number of arrays which are similar to the array A.
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n;
+    int mini=INT_MAX;
+    int maxi=INT_MIN;
+    cin>>n;
+    vector<int>diff(n);
+    for(int i=1;i<n;i++){
+        cin>>diff[i];
+    }
+    int lb,ub;
+    cin>>lb>>ub;
+    vector<int>nums(n);
+    nums[0]=0;
+    for(int i=1;i<n;i++){
+        nums[i]=diff[i]+nums[i-1];
+    }
+    for(int i=0;i<n;i++){
+        mini=min(mini,nums[i]);
+        maxi=max(maxi,nums[i]);
+    }
+    int x=lb-mini;
+    int y=ub-maxi;
+    if(x>y){
+        cout<<0;
+    }
+    else{
+       cout<< y-x+1;
+    }
+    return 0;
+}
